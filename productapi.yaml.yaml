@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: My shop server
+  version: 1.0.0
+  description: Allows read, create, update and delete of products
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      description: Retrieve a list of all products
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                products:
+                  - id: 1
+                    name: laptop
+                    category: electronics
+                    price: 200
+                  - id: 2
+                    name: mobile
+                    category: electronics
+                    price: 100
+    post:
+      summary: Add a new product to the store
+      description: Add a new product to the store
+      requestBody:
+        description: Create a new product in the store
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                price:
+                  type: integer
+        required: true
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+  /api/products/{productid}:
+    get:
+      summary: Get details of productid
+      description: Get details of productid passed
+      parameters:
+        - name: productid
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                product:
+                  id: 1
+                  name: laptop
+                  category: electronics
+                  price: 200
+    put:
+      summary: Update an existing product
+      description: Update an existing product by Id
+      parameters:
+        - name: productid
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existent product in the store
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                price:
+                  type: integer
+        required: true
+      responses:
+        '200':
+          description: Successful
+        '404':
+          description: Product id not found
+    delete:
+      summary: Delete an existing product
+      description: Delete an existing product by Id
+      parameters:
+        - name: productid
+          in: path
+          description: ID of product to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful
+        '404':
+          description: Product id not found
+components: {}
+tags: []
